@@ -1,0 +1,8 @@
+---
+install_files:
+  - owner:              'root'
+    group:              'root'
+    mode:               '0644'
+    src:                "{{ role_path }}/files/conf/index.html"
+    dest:               '/usr/share/nginx/www/index.html'
+

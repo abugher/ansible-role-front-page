@@ -1,0 +1,2 @@
+---
+- include:              '../tasks/install_files.yml'
