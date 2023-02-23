@@ -6,3 +6,4 @@ install_files:
     src:                "{{ role_path }}/files/conf/index.html"
     dest:               '/usr/share/nginx/www/index.html'
 
+  - 'nginx'
