@@ -1,0 +1,48 @@
+/* FF overrides these as instructed. */
+/* border-color:           #000000; */
+/* background-color:       #777777; */
+
+:root {
+  /* Nest properly, with evenly rendered padding. */
+  /* (In Firefox, as of today.) */
+  --border-width:       7px;
+  --padding:            5px;
+  --bar-padding:        calc(
+                          var(--border-width) + ( var(--padding) * 2 )
+                        ) 
+                        var(--padding) 
+                        calc(
+                          var(--border-width) + ( var(--padding) * 2 )
+                        ) 
+                        var(--padding) 
+                        ;
+  --node-margin:        0 var(--padding) 0 0;
+  --bar-margin:         0 0 var(--padding) 0;
+}
+
+body {
+  margin:               var(--padding);
+  padding:              0;
+}
+
+#nav-bar {
+  border-style:         inset;
+  border-width:         var(--border-width);
+  margin:               var(--bar-margin);
+  padding:              var(--bar-padding);
+}
+
+.nav-node {
+  border-style:         outset;
+  border-width:         var(--border-width);
+  margin:               var(--node-margin);
+  padding:              var(--padding);
+}
+
+#main-text {
+  margin:               0;
+  border-style:         inset;
+  border-width:         var(--border-width);
+  padding:              0 0 0 var(--padding);
+}
+
