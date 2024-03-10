@@ -1,6 +1,4 @@
 ---
-dependencies:
-  - 'nginx'
 install_files:
   - owner:              'root'
     group:              'root'

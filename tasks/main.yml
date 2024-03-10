@@ -1,3 +1,2 @@
 ---
-- include_tasks:        '../tasks/dependencies.yml'
 - include_tasks:        '../tasks/install_files.yml'
