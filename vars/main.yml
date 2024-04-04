@@ -1,4 +1,20 @@
 ---
+create_files:
+  - owner:              'root'
+    group:              'root'
+    mode:               '0755'
+    path:               '/usr/share/nginx/html'
+    state:              'directory'
+  - owner:              'root'
+    group:              'root'
+    mode:               '0755'
+    path:               '/usr/share/nginx/html/public'
+    state:              'directory'
+  - owner:              'root'
+    group:              'root'
+    mode:               '0755'
+    path:               '/usr/share/nginx/html/public/pictures'
+    state:              'directory'
 install_files:
   - owner:              'root'
     group:              'root'
