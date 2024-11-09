@@ -1,48 +1,107 @@
-/* FF overrides these as instructed. */
-/* border-color:           #000000; */
-/* background-color:       #777777; */
+/* VARIABLES */
+/*
+ * Define parameters, based on potentially complex sets of environmental
+ * factors, to be applied in the LAYOUT section, in the form of variables.
+ */
 
 :root {
-  /* Nest properly, with evenly rendered padding. */
-  /* (In Firefox, as of today.) */
-  --border-width:       7px;
-  --padding:            5px;
-  --bar-padding:        calc(
-                          var(--border-width) + ( var(--padding) * 2 )
-                        ) 
-                        var(--padding) 
-                        calc(
-                          var(--border-width) + ( var(--padding) * 2 )
-                        ) 
-                        var(--padding) 
-                        ;
-  --node-margin:        0 var(--padding) 0 0;
-  --bar-margin:         0 0 var(--padding) 0;
+  /* Define colors for dark and light modes. */
+  --honeydew:                   #f0fff0;
+  --dark:                       #000000;
+  --light:                      var(--honeydew);
+  --medium:                     #777777;
+  --link-new-default:           #0000ee;
+  --link-old-default:           #551a8b;
+  --link-active-default:        #ff0000;
+  --link-new-dark:              var(--link-new-default);
+  --link-old-dark:              var(--link-old-default);
+  --link-active-dark:           var(--link-active-default);
+  --link-new-light:             #80b0ff;
+  --link-old-light:             #c070d0;
+  --link-active-light:          var(--link-active-default);
+  /* Define tricky numeric values for alignment and sizing. */
+  --border-width:               7px;
+  --padding:                    5px;
+  --bar-padding:                calc(
+                                  var(--border-width) + ( var(--padding) * 2 )
+                                ) 
+                                var(--padding) 
+                                calc(
+                                  var(--border-width) + ( var(--padding) * 2 )
+                                ) 
+                                var(--padding) 
+                                ;
+  --node-margin:                0 var(--padding) 0 0;
+  --bar-margin:                 0 0 var(--padding) 0;
 }
 
+/* Define dark mode. */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color:                    var(--light);
+    --background-color:         var(--dark);
+    --border-color:             var(--medium);
+    --link-new:                 var(--link-new-light);
+    --link-old:                 var(--link-old-light);
+    --link-active:              var(--link-active-light);
+  }
+}
+
+/* Define light mode and make it default. */
+@media (prefers-color-scheme: light) or (prefers-color-scheme: no-preference) {
+  :root {
+    --color:                    var(--dark);
+    --background-color:         var(--light);
+    --border-color:             var(--medium);
+    --link-new:                 var(--link-new-dark);
+    --link-old:                 var(--link-old-dark);
+    --link-active:              var(--link-active-dark);
+  }
+}
+
+
+/* LAYOUT */
+/*
+ * Define page layout, using variables defined above as parameters, in as
+ * simple and clear a way as possible.
+ */
+
 body {
-  margin:               var(--padding);
-  padding:              0;
+  margin:                       var(--padding);
+  padding:                      0;
+
+  color:                        var(--color);
+  background-color:             var(--background-color);
+  border-color:                 var(--border-color);
+}
+
+:link { 
+  color:                        var(--link-new);
+}
+:visited { 
+  color:                        var(--link-old);
+}
+:link:active, :visited:active { 
+  color:                        var(--link-active);
 }
 
 #nav-bar {
-  border-style:         inset;
-  border-width:         var(--border-width);
-  margin:               var(--bar-margin);
-  padding:              var(--bar-padding);
+  border-style:                 inset;
+  border-width:                 var(--border-width);
+  margin:                       var(--bar-margin);
+  padding:                      var(--bar-padding);
 }
 
 .nav-node {
-  border-style:         outset;
-  border-width:         var(--border-width);
-  margin:               var(--node-margin);
-  padding:              var(--padding);
+  border-style:                 outset;
+  border-width:                 var(--border-width);
+  margin:                       var(--node-margin);
+  padding:                      var(--padding);
 }
 
 #main-text {
-  margin:               0;
-  border-style:         inset;
-  border-width:         var(--border-width);
-  padding:              0 0 0 var(--padding);
+  margin:                       0;
+  border-style:                 inset;
+  border-width:                 var(--border-width);
+  padding:                      0 0 0 var(--padding);
 }
-
