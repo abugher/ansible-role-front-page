@@ -66,13 +66,16 @@
  * simple and clear a way as possible.
  */
 
-body {
-  margin:                       var(--padding);
-  padding:                      0;
 
+html, body {
   color:                        var(--color);
   background-color:             var(--background-color);
   border-color:                 var(--border-color);
+}
+
+body {
+  margin:                       var(--padding);
+  padding:                      0;
 }
 
 :link { 
