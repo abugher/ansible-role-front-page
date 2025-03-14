@@ -16,7 +16,12 @@
       }
       for(let i = 0; i < url_var_names.length; i++) {
         if( "target" == decodeURIComponent(url_var_names[i]).substring(0, 6) ) {
-          targets.push(decodeURIComponent(url_var_values[i]))
+          let target = decodeURIComponent(url_var_values[i])
+          if( "http" == target.substring(0,4)) {
+            targets.push(target)
+          } else {
+            targets.push("http://" + target)
+          }
         }
       }
     </script>
