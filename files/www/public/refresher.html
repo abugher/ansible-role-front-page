@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel='stylesheet' href='style.css'></link>
+    <meta http-equiv="refresh" content="60" />
+    <script type="text/javascript">
+      var this_page = location.href.split("/").slice(-1)
+      var targets = []
+      var url_var_names = []
+      var url_var_values = []
+      var url_vars_raw = window.location.href.split('?')[1].split('&')
+      var targets = []
+
+      for(let i = 0; i < url_vars_raw.length; i++) {
+        [ url_var_names[i], url_var_values[i] ] = url_vars_raw[i].split('=')
+      }
+      for(let i = 0; i < url_var_names.length; i++) {
+        if( "target" == decodeURIComponent(url_var_names[i]).substring(0, 6) ) {
+          targets.push(decodeURIComponent(url_var_values[i]))
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <div id="main-text">
+      This page keeps login sessions from expiring by continually refreshing authenticated connections.  Add a URL to create a new entry in the list.  Remove an entry to stop refreshing that page.  When you have added enough sites, bookmark this page to preserve your list of pages to be prepared in case of browser session loss.
+    </div>
+    <script>
+      document.write("    <form action=\"" + this_page + "\" method=\"GET\">")
+      for(let i = 0; i < targets.length; i++) {
+        let target = targets[i]
+        document.write("      <input type=\"hidden\" name=\"target\" value=\"" + target + "\">")
+        document.write("      </input>")
+      }
+    </script>
+      <table>
+        <tr>
+          <label>
+            <td>
+              <input type="text" name="target_new">
+              </input>
+            </td>
+            <td>
+              <input type="submit" value="add">
+              </input>
+            </td>
+          </label>
+        </tr>
+      </table>
+    </form>
+
+    <table>
+      <script type="text/javascript">
+        for(let i = 0; i < targets.length; i++) {
+          let target = targets[i]
+          document.write("      <tr>")
+          document.write("        <td>")
+          document.write("          &nbsp;")
+          document.write("        </td>")
+          document.write("      </tr>")
+          document.write("      <tr>")
+          document.write("        <td>")
+          document.write("          <form action=\"" + this_page + "\" method=\"GET\">")
+
+          for(let ii = 0; ii < targets.length; ii++) {
+            if( i != ii ) {
+              document.write("            <input type=\"hidden\" name=\"target" + ii + "\" value=\"" + targets[ii] + "\">")
+              document.write("            </input>")
+            }
+          }
+
+          document.write("            <input type=\"submit\" value=\"remove\">")
+          document.write("            </input>")
+          document.write("          </form>")
+          document.write("        </td>")
+          document.write("        <td>")
+          document.write("          <div float=\"right\"><a href=\"" + target + "\">link</a></div>")
+          document.write("        </td>")
+          document.write("      </tr>")
+          document.write("      <tr>")
+          document.write("        <td colspan=2>")
+          document.write("          <iframe src=\"" + target + "\">")
+          document.write("          </iframe>\n")
+          document.write("        </td>")
+          document.write("      </tr>")
+        }
+      </script>
+    </table>
+  </body>
+</html>

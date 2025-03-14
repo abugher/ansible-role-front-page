@@ -29,5 +29,10 @@ install_files:
   - owner:              'root'
     group:              'root'
     mode:               '0644'
+    src:                "{{ role_path }}/files/www/public/refresher.html"
+    dest:               '/usr/share/nginx/html/public/refresher.html'
+  - owner:              'root'
+    group:              'root'
+    mode:               '0644'
     src:                "{{ role_path }}/files/www/style.css"
     dest:               '/usr/share/nginx/html/style.css'
