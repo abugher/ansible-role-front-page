@@ -2,6 +2,11 @@
 <html>
   <head>
     <link rel='stylesheet' href='/style.css'></link>
+    <style>
+      #target_field {
+        width:                  100%;
+      }
+    </style>
     <meta http-equiv="refresh" content="60" />
     <script type="text/javascript">
       var this_page = location.href.split("/").slice(-1)
@@ -27,17 +32,6 @@
     </script>
   </head>
   <body>
-    <div id="main-text">
-      <p>
-        This page keeps login sessions from expiring by continually refreshing authenticated connections.  Add a URL to create a new entry in the list.  Remove an entry to stop refreshing that page.  When you have added enough sites, bookmark this page to preserve your list of pages to be prepared in case of browser session loss.
-      </p>
-      <p>
-        Most sites will set <i>X-Frame-Options</i> to <i>sameorigin</i> or <i>deny</i>.  In that case, your browser will refuse to load the site in a frame.  If you hack your browser to disregard that header, this page should work great, but that would compromise your security.  If you can limit the exception to only this page or site, that should work.  I might recommend a dedicated browser profile used only for this page, with a header-hacking extension active only for that profile.
-      </p>
-      <p>
-        If you copy the source code of this page to a file on your computer, you should be able to browse that file and use this page that way.  You can avoid trusting my server that way.
-      </p>
-    </div>
     <script>
       document.write("    <form action=\"" + this_page + "\" method=\"GET\">")
       for(let i = 0; i < targets.length; i++) {
@@ -48,19 +42,38 @@
     </script>
       <table>
         <tr>
-          <label>
-            <td>
-              <input type="text" name="target_new">
-              </input>
-            </td>
+          <th>
+            <label for="target_field">
+              Specify a URL to continually refresh:
+            </label>
+          </th>
+          <th>
+          </th>
+        </tr>
+        <tr>
+          <td>
+            <input type="text" name="target_new" id="target_field" width="100%">
+            </input>
+          </td>
             <td>
               <input type="submit" value="add">
               </input>
             </td>
-          </label>
         </tr>
       </table>
     </form>
+
+    <div id="main-text">
+      <p>
+        <b>What is this?</b>  This page keeps login sessions from expiring by continually refreshing authenticated connections.  Add a URL to create a new entry in the list.  Remove an entry to stop refreshing that page.  When you have added enough sites, bookmark this page to preserve your list of pages to be prepared in case of browser session loss.
+      </p>
+      <p>
+        <b>Why doesn't it work?</b>  It works for some sites.  Most sites, though, will set <i>X-Frame-Options</i> to <i>sameorigin</i> or <i>deny</i>.  In that case, your browser will refuse to load the site in a frame.  (Chromium and probably Chrome will just lie about the nature of the problem.  Firefox almost tells the truth:  <i>[site] will not allow Firefox to display the page ...</i>  The site can only advise.  The browser makes the decision.  It's a <i>good</i> decision, but browser makers are being dirty lying cowards with their error messages.)
+      </p>
+      <p>
+        <b>Can I make it work?</b>  If you hack your browser to disregard that header, this page should work great, but that would compromise your security.  If you can limit the exception to only this page or site, that should be fine.  I might recommend a dedicated browser profile used only for this page, with a header-hacking extension active only for that profile.  If you copy the source code of this page to a file on your computer, you should be able to browse that file and avoid trusting any server.
+      </p>
+    </div>
 
     <table>
       <script type="text/javascript">
