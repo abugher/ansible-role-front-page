@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <link rel='stylesheet' href='style.css'></link>
+    <link rel='stylesheet' href='/style.css'></link>
     <meta http-equiv="refresh" content="60" />
     <script type="text/javascript">
       var this_page = location.href.split("/").slice(-1)
@@ -28,7 +28,15 @@
   </head>
   <body>
     <div id="main-text">
-      This page keeps login sessions from expiring by continually refreshing authenticated connections.  Add a URL to create a new entry in the list.  Remove an entry to stop refreshing that page.  When you have added enough sites, bookmark this page to preserve your list of pages to be prepared in case of browser session loss.
+      <p>
+        This page keeps login sessions from expiring by continually refreshing authenticated connections.  Add a URL to create a new entry in the list.  Remove an entry to stop refreshing that page.  When you have added enough sites, bookmark this page to preserve your list of pages to be prepared in case of browser session loss.
+      </p>
+      <p>
+        Most sites will set <i>X-Frame-Options</i> to <i>sameorigin</i> or <i>deny</i>.  In that case, your browser will refuse to load the site in a frame.  If you hack your browser to disregard that header, this page should work great, but that would compromise your security.  If you can limit the exception to only this page or site, that should work.  I might recommend a dedicated browser profile used only for this page, with a header-hacking extension active only for that profile.
+      </p>
+      <p>
+        If you copy the source code of this page to a file on your computer, you should be able to browse that file and use this page that way.  You can avoid trusting my server that way.
+      </p>
     </div>
     <script>
       document.write("    <form action=\"" + this_page + "\" method=\"GET\">")
