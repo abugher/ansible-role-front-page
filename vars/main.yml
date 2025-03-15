@@ -36,3 +36,8 @@ install_files:
     mode:               '0644'
     src:                "{{ role_path }}/files/www/style.css"
     dest:               '/usr/share/nginx/html/style.css'
+symlinks:
+  - owner:              'root'
+    group:              'root'
+    src:                '../style.css'
+    dest:               '/usr/share/nginx/html/public/style.css'
