@@ -9,20 +9,23 @@
     </style>
     <meta http-equiv="refresh" content="60" />
     <script type="text/javascript">
-      var this_page = location.href.split("/").slice(-1)
-      var targets = []
-      var url_var_names = []
-      var url_var_values = []
-      var url_vars_raw = window.location.href.split('?')[1].split('&')
-      var targets = []
+      // Decide about semicolons.
+      let urlParts = window.location.href.split("/");
+      let urlEnd = urlParts[urlParts.length - 1];
+      var thisPage = urlEnd.split("?")[0];
+      //alert(thisPage);
+      var targets = [];
+      var urlVarNames = [];
+      var urlVarValues = [];
+      var urlVarsRaw = window.location.href.split("?")[1].split("&");
 
-      for(let i = 0; i < url_vars_raw.length; i++) {
-        [ url_var_names[i], url_var_values[i] ] = url_vars_raw[i].split('=')
+      for(let i = 0; i < urlVarsRaw.length; i++) {
+        [ urlVarNames[i], urlVarValues[i] ] = urlVarsRaw[i].split("=")
       }
-      for(let i = 0; i < url_var_names.length; i++) {
-        if( "target" == decodeURIComponent(url_var_names[i]).substring(0, 6) ) {
-          let target = decodeURIComponent(url_var_values[i])
-          if( "http" == target.substring(0,4)) {
+      for(let i = 0; i < urlVarNames.length; i++) {
+        if( "target" == decodeURIComponent(urlVarNames[i]).substring(0, "target".length) ) {
+          let target = decodeURIComponent(urlVarValues[i])
+          if( "http" == target.substring(0, "http".length)) {
             targets.push(target)
           } else {
             targets.push("http://" + target)
@@ -39,6 +42,21 @@
       }
 
 
+      function fixTargetForm() {
+        let targetForm = document.getElementById("target-form");
+        targetForm.setAttribute("action", thisPage);
+
+        for(let i = 0; i < targets.length; i++) {
+          let target = targets[i]
+          let input = document.createElement("input");
+          input.setAttribute("type", "hidden");
+          input.setAttribute("name", "target" + i);
+          input.setAttribute("value", targets[i]);
+          targetForm.appendChild(input);
+        }
+      }
+
+
       function addTableOfFrames() {
         for(let i = 0; i < targets.length; i++) {
           let target = targets[i]
@@ -51,7 +69,7 @@
           let rowButtons = tbody.insertRow(-1);
           let cellRemove = rowButtons.insertCell(-1);
           let form = document.createElement("form");
-          form.setAttribute("action", this_page);
+          form.setAttribute("action", thisPage);
           form.setAttribute("method", "GET");
           for(let ii = 0; ii < targets.length; ii++) {
             if( i != ii ) {
@@ -81,20 +99,6 @@
           let iframe = document.createElement("iframe");
           iframe.setAttribute("src", target);
           cellFrame.appendChild(iframe);
-        }
-      }
-
-
-      function fixTargetForm() {
-        let targetForm = document.getElementById("target-form");
-        targetForm.setAttribute("action", this_page);
-
-        for(let i = 0; i < targets.length; i++) {
-          let target = targets[i]
-          let input = document.createElement("input");
-          input.setAttribute("type", "hidden");
-          input.setAttribute("name", "target" + i);
-          targetForm.appendChild(input);
         }
       }
 
