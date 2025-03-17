@@ -9,7 +9,6 @@
     </style>
     <meta http-equiv="refresh" content="60" />
     <script type="text/javascript">
-      // Decide about semicolons.
       let urlParts = window.location.href.split("/")
       let urlEnd = urlParts[urlParts.length - 1]
       var thisPage = urlEnd.split("?")[0]
@@ -21,15 +20,27 @@
       for(let i = 0; i < urlVarsRaw.length; i++) {
         [ urlVarNames[i], urlVarValues[i] ] = urlVarsRaw[i].split("=")
       }
+
+      let targetNew = ''
+      let prefix = "target"
+      let prefixNew = "target-new"
+      let protocol = "http"
       for(let i = 0; i < urlVarNames.length; i++) {
-        if( "target" == decodeURIComponent(urlVarNames[i]).substring(0, "target".length) ) {
+        let urlVarNameDecoded = decodeURIComponent(urlVarNames[i])
+        if( prefix == urlVarNameDecoded.substring(0, prefix.length) ) {
           let target = decodeURIComponent(urlVarValues[i])
-          if( "http" == target.substring(0, "http".length)) {
-            targets.push(target)
+          if( protocol != target.substring(0, protocol.length) ) {
+            target = "http://" + target
+          } 
+          if( prefixNew == decodeURIComponent(urlVarNames[i]).substring(0, prefixNew.length) ) {
+            targetNew = target
           } else {
-            targets.push("http://" + target)
+            targets.push(target)
           }
         }
+      }
+      if('' != targetNew) {
+        targets.push(targetNew)
       }
 
       document.addEventListener("DOMContentLoaded", buildPage)
@@ -55,40 +66,50 @@
 
 
       function addTableOfFrames() {
+        let table = document.getElementById("table-of-frames")
+        let tbody = table.getElementsByTagName("tbody")[0]
         for(let i = 0; i < targets.length; i++) {
-          let target = targets[i]
-          let table = document.getElementById("table-of-frames")
-          let tbody = table.getElementsByTagName("tbody")[0]
-          let rowEmpty = tbody.insertRow(-1)
-          let cellEmpty = rowEmpty.insertCell(-1)
-          let textEmpty = addText(cellEmpty, "")
-          let rowButtons = tbody.insertRow(-1)
-          let cellRemove = rowButtons.insertCell(-1)
-          let formRemove = addElement(cellRemove, "form")
-          formRemove.setAttribute("action", thisPage)
-          formRemove.setAttribute("method", "GET")
-          for(let ii = 0; ii < targets.length; ii++) {
-            if( i != ii ) {
-              let inputHidden = addElement(formRemove, "input")
-              inputHidden.setAttribute("type", "hidden")
-              inputHidden.setAttribute("name", "target" + ii)
-              inputHidden.setAttribute("value", targets[ii])
-            }
-          }
-          let inputRemove = addElement(formRemove, "input")
-          inputRemove.setAttribute("type", "submit")
-          inputRemove.setAttribute("value", "remove")
-          let cellLink = rowButtons.insertCell(-1)
-          let div = addElement(cellLink, "div")
-          div.setAttribute("float", "right")
-          let link = addElement(div, "a")
-          link.setAttribute("href", target)
-          let textLink = addText(link, "link")
-          let rowFrame = tbody.insertRow(-1)
-          let cellFrame = rowFrame.insertCell(-1)
-          let iframe = addElement(cellFrame, "iframe")
-          iframe.setAttribute("src", target)
+          addEntryToTableOfFrames(tbody, i)
         }
+      }
+
+
+      function addEntryToTableOfFrames(tbody, i) {
+        let target = targets[i]
+        // empty space
+        let rowEmpty = tbody.insertRow(-1)
+        let cellEmpty = rowEmpty.insertCell(-1)
+        let textEmpty = addText(cellEmpty, "")
+        // button row (remove, link)
+        let rowButtons = tbody.insertRow(-1)
+        // remove form and remove button
+        let cellRemove = rowButtons.insertCell(-1)
+        let formRemove = addElement(cellRemove, "form")
+        formRemove.setAttribute("action", thisPage)
+        formRemove.setAttribute("method", "GET")
+        for(let ii = 0; ii < targets.length; ii++) {
+          if( i != ii ) {
+            let inputHidden = addElement(formRemove, "input")
+            inputHidden.setAttribute("type", "hidden")
+            inputHidden.setAttribute("name", "target" + ii)
+            inputHidden.setAttribute("value", targets[ii])
+          }
+        }
+        let inputRemove = addElement(formRemove, "input")
+        inputRemove.setAttribute("type", "submit")
+        inputRemove.setAttribute("value", "remove")
+        // link
+        let cellLink = rowButtons.insertCell(-1)
+        let div = addElement(cellLink, "div")
+        div.setAttribute("float", "right")
+        let link = addElement(div, "a")
+        link.setAttribute("href", target)
+        let textLink = addText(link, "link")
+        let rowFrame = tbody.insertRow(-1)
+        let cellFrame = rowFrame.insertCell(-1)
+        // frame
+        let iframe = addElement(cellFrame, "iframe")
+        iframe.setAttribute("src", target)
       }
 
 
