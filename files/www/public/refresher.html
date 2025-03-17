@@ -10,14 +10,13 @@
     <meta http-equiv="refresh" content="60" />
     <script type="text/javascript">
       // Decide about semicolons.
-      let urlParts = window.location.href.split("/");
-      let urlEnd = urlParts[urlParts.length - 1];
-      var thisPage = urlEnd.split("?")[0];
-      //alert(thisPage);
-      var targets = [];
-      var urlVarNames = [];
-      var urlVarValues = [];
-      var urlVarsRaw = window.location.href.split("?")[1].split("&");
+      let urlParts = window.location.href.split("/")
+      let urlEnd = urlParts[urlParts.length - 1]
+      var thisPage = urlEnd.split("?")[0]
+      var targets = []
+      var urlVarNames = []
+      var urlVarValues = []
+      var urlVarsRaw = window.location.href.split("?")[1].split("&")
 
       for(let i = 0; i < urlVarsRaw.length; i++) {
         [ urlVarNames[i], urlVarValues[i] ] = urlVarsRaw[i].split("=")
@@ -33,26 +32,24 @@
         }
       }
 
-      document.addEventListener("DOMContentLoaded", buildPage);
+      document.addEventListener("DOMContentLoaded", buildPage)
 
 
       function buildPage() {
-        fixTargetForm();
-        addTableOfFrames();
+        fixTargetForm()
+        addTableOfFrames()
       }
 
 
       function fixTargetForm() {
-        let targetForm = document.getElementById("target-form");
-        targetForm.setAttribute("action", thisPage);
-
+        let targetForm = document.getElementById("target-form")
+        targetForm.setAttribute("action", thisPage)
         for(let i = 0; i < targets.length; i++) {
           let target = targets[i]
-          let input = document.createElement("input");
-          input.setAttribute("type", "hidden");
-          input.setAttribute("name", "target" + i);
-          input.setAttribute("value", targets[i]);
-          targetForm.appendChild(input);
+          let input = addElement(targetForm, "input")
+          input.setAttribute("type", "hidden")
+          input.setAttribute("name", "target" + i)
+          input.setAttribute("value", targets[i])
         }
       }
 
@@ -60,46 +57,52 @@
       function addTableOfFrames() {
         for(let i = 0; i < targets.length; i++) {
           let target = targets[i]
-          let table = document.getElementById("table-of-frames");
-          let tbody = table.getElementsByTagName("tbody")[0];
-          let rowEmpty = tbody.insertRow(-1);
-          let cellEmpty = rowEmpty.insertCell(-1);
-          let textEmpty = document.createTextNode("");
-          cellEmpty.appendChild(textEmpty);
-          let rowButtons = tbody.insertRow(-1);
-          let cellRemove = rowButtons.insertCell(-1);
-          let form = document.createElement("form");
-          form.setAttribute("action", thisPage);
-          form.setAttribute("method", "GET");
+          let table = document.getElementById("table-of-frames")
+          let tbody = table.getElementsByTagName("tbody")[0]
+          let rowEmpty = tbody.insertRow(-1)
+          let cellEmpty = rowEmpty.insertCell(-1)
+          let textEmpty = addText(cellEmpty, "")
+          let rowButtons = tbody.insertRow(-1)
+          let cellRemove = rowButtons.insertCell(-1)
+          let formRemove = addElement(cellRemove, "form")
+          formRemove.setAttribute("action", thisPage)
+          formRemove.setAttribute("method", "GET")
           for(let ii = 0; ii < targets.length; ii++) {
             if( i != ii ) {
-              let inputHidden = document.createElement("input");
-              inputHidden.setAttribute("type", "hidden");
-              inputHidden.setAttribute("name", "target" + ii);
-              inputHidden.setAttribute("value", targets[ii]);
-              form.appendChild(inputHidden);
+              let inputHidden = addElement(formRemove, "input")
+              inputHidden.setAttribute("type", "hidden")
+              inputHidden.setAttribute("name", "target" + ii)
+              inputHidden.setAttribute("value", targets[ii])
             }
           }
-          let inputRemove = document.createElement("input");
-          inputRemove.setAttribute("type", "submit");
-          inputRemove.setAttribute("value", "remove");
-          form.appendChild(inputRemove);
-          cellRemove.appendChild(form);
-          let cellLink = rowButtons.insertCell(-1);
-          let div = document.createElement("div");
-          div.setAttribute("float", "right");
-          let link = document.createElement("a");
-          link.setAttribute("href", target);
-          let textLink = document.createTextNode("link");
-          link.appendChild(textLink);
-          div.appendChild(link);
-          cellLink.appendChild(div);
-          let rowFrame = tbody.insertRow(-1);
-          let cellFrame = rowFrame.insertCell(-1);
-          let iframe = document.createElement("iframe");
-          iframe.setAttribute("src", target);
-          cellFrame.appendChild(iframe);
+          let inputRemove = addElement(formRemove, "input")
+          inputRemove.setAttribute("type", "submit")
+          inputRemove.setAttribute("value", "remove")
+          let cellLink = rowButtons.insertCell(-1)
+          let div = addElement(cellLink, "div")
+          div.setAttribute("float", "right")
+          let link = addElement(div, "a")
+          link.setAttribute("href", target)
+          let textLink = addText(link, "link")
+          let rowFrame = tbody.insertRow(-1)
+          let cellFrame = rowFrame.insertCell(-1)
+          let iframe = addElement(cellFrame, "iframe")
+          iframe.setAttribute("src", target)
         }
+      }
+
+
+      function addText(parentElement, text) {
+        return parentElement.appendChild(
+          document.createTextNode(text)
+        )
+      }
+
+
+      function addElement(parentElement, childElementName) {
+        return parentElement.appendChild(
+          document.createElement(childElementName)
+        )
       }
 
     </script>
