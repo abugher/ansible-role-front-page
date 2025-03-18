@@ -89,14 +89,14 @@ function addEntryToTableOfFrames(tbody, i) {
   inputRemove.setAttribute("value", "remove")
   // link
   let cellLink = rowButtons.insertCell(-1)
-  let div = addElement(cellLink, "div")
-  div.setAttribute("float", "right")
-  let link = addElement(div, "a")
+  cellLink.setAttribute("align", "right");
+  let link = addElement(cellLink, "a")
   link.setAttribute("href", target)
   let textLink = addText(link, "link")
+  // frame
   let rowFrame = tbody.insertRow(-1)
   let cellFrame = rowFrame.insertCell(-1)
-  // frame
+  cellFrame.setAttribute("colspan", 2)
   let iframe = addElement(cellFrame, "iframe")
   iframe.setAttribute("src", target)
 }
