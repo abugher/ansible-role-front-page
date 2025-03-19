@@ -60,7 +60,7 @@
         <b>Why doesn't it work?</b>  It works for some sites.  Most sites, though, will set <i>X-Frame-Options</i> to <i>sameorigin</i> or <i>deny</i>.  In that case, your browser will refuse to load the site in a frame.  (It may also claim that the site <i>refused</i> or did not <i>allow</i> the connection, which is a blatant lie.)
       </p>
       <p>
-        <b>Can I make it work?</b>  If you hack your browser to disregard that header, this page should work great, but that would compromise your security.  If you can limit the exception to only this page or site, the compromise should be minimal.  If you copy the source code of this page to a file on your computer, you should be able to browse that file and avoid trusting any server, and thus avoid any compromise.
+        <b>Can I make it work?</b>  You can find a browser extension to modify your browser's policies about this header, but it would compromise your security to ignore it in general.  Instead, copy the source code of this page (<i>refresher.html</i> and <i>refresher.js</i>) and browse the copy.  Apply any policy overrides only to your offline copy of this page.
       </p>
     </div>
 
