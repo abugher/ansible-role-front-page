@@ -93,7 +93,13 @@ function addEntryToTableOfFrames(tbody, i) {
   let link = addElement(cellLink, "a")
   link.setAttribute("href", target)
   let textLink = addText(link, "link")
-  // frame
+  // URL row
+  let rowURL = tbody.insertRow(-1)
+  let cellURL = rowURL.insertCell(-1)
+  cellURL.setAttribute("class", "cell-url")
+  cellURL.setAttribute("colspan", 2)
+  let textURL = addText(cellURL, target)
+  // frame row
   let rowFrame = tbody.insertRow(-1)
   let cellFrame = rowFrame.insertCell(-1)
   cellFrame.setAttribute("colspan", 2)
