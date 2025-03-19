@@ -68,7 +68,7 @@ function addEntryToTableOfFrames(tbody, i) {
   // empty space
   let rowEmpty = tbody.insertRow(-1)
   let cellEmpty = rowEmpty.insertCell(-1)
-  let textEmpty = addText(cellEmpty, "")
+  cellEmpty.innerHTML = "&nbsp;"
   // button row (remove, link)
   let rowButtons = tbody.insertRow(-1)
   // remove form and remove button
