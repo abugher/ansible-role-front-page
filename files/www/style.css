@@ -48,7 +48,7 @@
 }
 
 /* Define light mode and make it default. */
-@media (prefers-color-scheme: light) or (prefers-color-scheme: no-preference) {
+@media not (prefers-color-scheme: dark) {
   :root {
     --color:                    var(--dark);
     --background-color:         var(--light);
